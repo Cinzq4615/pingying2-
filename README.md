@@ -11,14 +11,14 @@
 本工具的核心价值在于将杂乱的课本图片瞬间转化为标准练习卷：
 
 ### 1. 输入 (Input)
-上传一张包含生词表的原始照片（支持多图识别）：
-> *示例：课本背后的识字表/词语表*
-> ![课本生词表输入示例](https://raw.githubusercontent.com/your-username/pinyin-generator/main/docs/input_sample.jpg) *(请替换为实际路径)*
+上传一张包含生词表的原始照片（如课本第117页词语表）：
+> *示例：课本背后的识字表/词语表原图*
+> ![课本生词表输入示例](./assets/sample_input_textbook.jpg)
 
 ### 2. 输出 (Output)
 AI 自动提取词语、生成拼音并完成田字格排版，可直接导出为 A4 PDF 打印：
-> *示例：生成的标准练习卷*
-> ![练习卷输出示例](https://raw.githubusercontent.com/your-username/pinyin-generator/main/docs/output_sample.png) *(请替换为实际路径)*
+> *示例：生成的标准练习卷预览（自动对齐、带页码）*
+> ![练习卷输出示例](./assets/sample_output_worksheet.png)
 
 ---
 
@@ -45,56 +45,37 @@ cd pinyin-generator
 npm init -y
 ```
 
-### 2. 安装核心依赖
-```bash
-# 安装生产依赖
-npm install react react-dom @google/genai
-
-# 安装开发依赖 (Vite + TypeScript)
-npm install -D vite @vitejs/plugin-react typescript @types/react @types/react-dom
-```
-
-### 3. 配置环境变量 (API Key)
-在项目根目录创建一个 `.env` 文件：
-1. 前往 [Google AI Studio](https://aistudio.google.com/) 获取免费的 API Key。
-2. 在 `.env` 中写入：
-   ```text
-   VITE_API_KEY=你的_GEMINI_API_KEY
-   ```
-
----
-
-## 🚀 运行与构建
-
-### 启动开发服务器
-```bash
-npx vite
-```
-启动后，访问浏览器控制台输出的地址（通常是 `http://localhost:5173`）。
-
-### 构建生产版本
-```bash
-npx vite build
+### 2. 项目目录结构
+```text
+pinyin-generator/
+├── assets/             # 存放示例图片及资源
+│   ├── sample_input_textbook.jpg
+│   └── sample_output_worksheet.png
+├── index.html          # 入口 HTML
+├── App.tsx             # 主应用逻辑
+├── index.tsx           # React 挂载入口
+├── types.ts            # 类型定义
+└── .env                # 环境变量 (存储 API Key)
 ```
 
 ---
 
 ## 📖 使用指南
 
-1. **准备素材**：准备一张清晰的课本生词表照片。
+1. **准备素材**：准备一张清晰的课本生词表照片（如示例中的识字表）。
 2. **上传图片**：点击“添加图片”按钮，支持多图同时处理。
 3. **AI 处理**：点击“开始生成”，AI 会自动识别汉字、生成拼音并完成排版。
 4. **导出 PDF**：预览满意后，点击右上方“导出高质量 PDF”。
 5. **打印技巧**：
-   - 打印时请选择 **“实际大小” (100%)** 而非“适应页面”。
-   - 建议使用黑白激光打印机。
+   - 打印时请选择 **“实际大小” (100%)** 而非“适应页面”，以确保田字格尺寸标准（约 14mm）。
+   - 建议使用黑白激光打印机，效果最接近字帖。
 
 ## 🔧 常见技术问题
 
 - **PDF 出现空白页？**
-  - 请确保浏览器缩放比例为 100%。本工具已通过 `296.8mm` 的微调高度避开了像素舍入误差。
+  - 请确保浏览器缩放比例为 100%。本工具已通过 `296.8mm` 的高度微调避开了像素舍入误差。
 - **儿化音没有对齐？**
-  - 系统已内置提示词规则，强制要求将“儿”字独立占格，如遇特殊生僻词，可重新点击生成。
+  - 系统已内置提示词规则，强制要求将“儿”字独立占格（如“哪儿”识别为两个字音），以确保书写规范。
 
 ## 📄 开源协议
 
