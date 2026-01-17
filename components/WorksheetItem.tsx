@@ -9,32 +9,26 @@ interface WorksheetItemProps {
 
 const WorksheetItem: React.FC<WorksheetItemProps> = ({ item }) => {
   const characters = item.word.split('');
-  // Split pinyin by spaces. We handle multiple spaces and trim.
   const pinyinParts = item.pinyin.trim().split(/\s+/);
-  
-  // Size of one grid box
   const boxSize = 56;
 
   return (
-    <div className="inline-flex flex-col items-start mr-8 mb-6 break-inside-avoid">
+    /* 移除 mr-6 和 mb-8，改由父容器 gap 控制 */
+    <div className="inline-flex flex-col items-start break-inside-avoid">
       <div className="flex">
         {characters.map((_, idx) => (
           <div key={idx} className="flex flex-col items-center flex-shrink-0">
-            {/* 
-                Pinyin Container: 
-                Increased height from h-6 to h-10 (40px) to provide ample space for descenders.
-                Used items-center instead of items-end to avoid pushing characters too close to the grid.
-            */}
+            {/* 拼音部分 */}
             <div 
               style={{ width: `${boxSize}px` }}
-              className="h-10 flex items-center justify-center overflow-visible"
+              className="h-9 flex items-center justify-center overflow-visible"
             >
-              <span className="text-[15px] font-medium text-gray-900 leading-normal whitespace-nowrap">
+              <span className="text-[16px] font-bold text-black leading-none whitespace-nowrap">
                 {pinyinParts[idx] || ''}
               </span>
             </div>
             
-            {/* Grid Box with border collapse logic */}
+            {/* 田字格部分 - 边框重叠处理 */}
             <div className={idx > 0 ? "-ml-[1px]" : ""}>
               <TianZiGe size={boxSize} />
             </div>
